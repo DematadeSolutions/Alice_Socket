@@ -43,8 +43,8 @@ print(count)
 
 redis_client=None
 redis_client= redis.Redis(
-    # host= 'dematadesolutions.0yanxb.ng.0001.aps1.cache.amazonaws.com',
-    host= 'localhost',
+    host= 'dematadesolutions.0yanxb.ng.0001.aps1.cache.amazonaws.com',
+    # host= 'localhost',
     port= '6379')
 print("redis connection : ",redis_client.ping())
 # try:
