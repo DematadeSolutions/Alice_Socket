@@ -86,6 +86,8 @@ else:
                         redis_client.set("AT-PC-{}".format(data["tk"]),data["lp"])
                 if "e" in data and "ts" in data and "lp" in data:
                     redis_client.set("AT-{}-{}".format(data["e"],data["ts"]),data["lp"])
+                if "pc" in data and "tk" in data and data["tk"] in ["26000","26009","26017","1"]:
+                    redis_client.set("PC-{}".format(data["tk"]),data["pc"])
                 
                 if 's' in data and data['s'] == 'OK':
                     for i in range(0,len(arr),200):
