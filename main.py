@@ -103,9 +103,17 @@ print(count)
 #         count=count+1
 #         arr.append("{}|{}".format(row[0],row[4]))
 
-redis_client = redis.Redis(
+redis_client=None
+redis_client= redis.Redis(
     host= 'dematadesolutions.0yanxb.ng.0001.aps1.cache.amazonaws.com',
+    # host= 'localhost',
     port= '6379')
+print("redis connection : ",redis_client.ping())
+# try:
+#     redis_client.ping()
+# except (redis.exceptions.ConnectionError, ConnectionRefusedError):
+#     print("redis connection error")
+    
 
 session_request=get_session(client_key,api_key)
 if 'loginType' in session_request and session_request['loginType'] == None:
@@ -130,6 +138,9 @@ else:
                     redis_client.set("AT-{}".format(data["tk"]),data["lp"])
                     if "e" in data and (data["e"] == "NSE" or data["e"] == "BSE"):
                         redis_client.set("AT-PC-{}".format(data["tk"]),data["lp"])
+                if "e" in data and "ts" in data and "lp" in data:
+                    redis_client.set("AT-{}-{}".format(data["e"],data["ts"]),data["lp"])
+                
                 if 's' in data and data['s'] == 'OK':
                     for i in range(0,len(arr),200):
                         channel = "#".join(arr[slice(i,i+200)])
