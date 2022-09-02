@@ -1,4 +1,3 @@
-﻿# PriceSocket
 # AntV2Python
 
 python version : 3.10.6
