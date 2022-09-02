@@ -5,18 +5,20 @@ import rel
 from modules import *
 import csv
 import redis
+from datetime import date
 
 # Enter the client code
 client_key = 'AB053908'
 
 #Enter the session Id
 api_key='vCJz5by25ZoH7jNgrk6huLc0UlRbC6itgeSE67ITWz0PhW7iVaJ9KbPTHC0gf8sDyCoRTbeS1ujIJWX8BQtTMSKdBjLEXzSn1Z2zixFfPkSeutMIOrO8KyQKbO2Oko2n'
-
+print("date : ",date.today())
+date="2022-09-08"
 fileArr=[
     {"file":'NSE.csv',"filter":["EQ"],"filterIndex":2,"symbolIndex":0,"tokenIndex":4},
     {"file":'NFO.csv',"filter":["OPTIDX","FUTIDX"],"filterIndex":4,"symbolIndex":0,"tokenIndex":3},
-    {"file":'CDS.csv',"filter":["FUTCOM"],"filterIndex":4,"symbolIndex":0,"tokenIndex":3},
-    {"file":'MCX.csv',"filter":["FUTCUR"],"filterIndex":5,"symbolIndex":1,"tokenIndex":4},
+    {"file":'MCX.csv',"filter":["FUTCOM"],"filterIndex":4,"symbolIndex":0,"tokenIndex":3},
+    {"file":'CDS.csv',"filter":["FUTCUR"],"filterIndex":5,"symbolIndex":1,"tokenIndex":4},
     {"file":'INDICES.csv',"symbolIndex":0,"tokenIndex":2}
     ]
 # fileArr=['INDICES.csv']
@@ -34,6 +36,7 @@ for file in fileArr:
         if "filter" in file and row[file["filterIndex"]] not in file["filter"]:
             pass
         else:
+        # elif (file["file"]=="NFO.csv" and row[10]==date) or file["file"]!="NFO.csv":
             count=count+1
             arr.append("{}|{}".format(row[file["symbolIndex"]],row[file["tokenIndex"]]))
 
@@ -128,13 +131,14 @@ else:
                     if "e" in data and (data["e"] == "NSE" or data["e"] == "BSE"):
                         redis_client.set("AT-PC-{}".format(data["tk"]),data["lp"])
                 if 's' in data and data['s'] == 'OK':
-                    channel = "#".join(arr)
-                    data = {
-                        "k": channel,
-                        "t": 't',
-                        "m":"compact_marketdata"
-                    }
-                    ws.send(json.dumps(data))
+                    for i in range(0,len(arr),200):
+                        channel = "#".join(arr[slice(i,i+200)])
+                        data = {
+                            "k": channel,
+                            "t": 't',
+                            "m":"compact_marketdata"
+                        }
+                        ws.send(json.dumps(data))
 
             def on_error(ws, error):
                 print(error)
