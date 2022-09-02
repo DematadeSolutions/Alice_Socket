@@ -1,19 +1,21 @@
 import websocket
-import _thread
-import time
 import rel
 from modules import *
 import csv
 import redis
-from datetime import date
+from datetime import date, datetime
+from pya3 import *
 
 # Enter the client code
 client_key = 'AB053908'
 
 #Enter the session Id
 api_key='vCJz5by25ZoH7jNgrk6huLc0UlRbC6itgeSE67ITWz0PhW7iVaJ9KbPTHC0gf8sDyCoRTbeS1ujIJWX8BQtTMSKdBjLEXzSn1Z2zixFfPkSeutMIOrO8KyQKbO2Oko2n'
+
+alice = Aliceblue(user_id=client_key, api_key=api_key)
+
 print("date : ",date.today())
-date="2022-09-08"
+today_date="2022-09-08"
 fileArr=[
     {"file":'NSE.csv',"filter":["EQ"],"filterIndex":2,"symbolIndex":0,"tokenIndex":4},
     {"file":'NFO.csv',"filter":["OPTIDX","FUTIDX"],"filterIndex":4,"symbolIndex":0,"tokenIndex":3},
@@ -23,10 +25,6 @@ fileArr=[
     ]
 # fileArr=['INDICES.csv']
 arr=[]
-# OPTIDX|FUTIDX
-# NSE
-
-print("test : ","hello" in ["hello","heyy"])
 
 count=0
 for file in fileArr:
@@ -42,71 +40,11 @@ for file in fileArr:
 
 print(arr)
 print(count)
-# NFO
-# for file in fileArr:
-#     file = open(file)
-#     csvreader = csv.reader(file)
-#     count=0
-#     for row in csvreader:
-#         # if row[4] not in arrt:
-#         #     arrt.append(row[4])
-#         if row[4] == "OPTIDX" or row[4] == "FUTIDX":
-#             count=count+1
-#             arr.append("{}|{}".format(row[0],row[3]))
-
-
-# MCX
-# for file in fileArr:
-#     file = open(file)
-#     csvreader = csv.reader(file)
-#     count=0
-#     for row in csvreader:
-#         # if row[4] not in arrt:
-#         #     arrt.append(row[4])
-#         if row[4] == "FUTCOM":
-#             count=count+1
-#             arr.append("{}|{}".format(row[0],row[3]))
-
-# CDS
-# for file in fileArr:
-#     file = open(file)
-#     csvreader = csv.reader(file)
-#     count=0
-#     for row in csvreader:
-#         # if row[5] not in arrt:
-#         #     arrt.append(row[5])
-#         if row[5] == "FUTCUR":
-#             count=count+1
-#             arr.append("{}|{}".format(row[1],row[4]))
-
-
-# INDICES
-# for file in fileArr:
-#     file = open(file)
-#     csvreader = csv.reader(file)
-#     count=0
-#     for row in csvreader:
-#         count=count+1
-#         arr.append("{}|{}".format(row[0],row[2]))
-
-# print(arr)
-
-# BSE,SENSEX,1 | NSE,NIFTY 50,26000 | NSE,NIFTY BANK,26009 | NSE,INDIA VIX,26017
-
-
-# nsefile = open('NSE.csv')
-# arr=[]
-# csvreader = csv.reader(nsefile)
-# count=0
-# for row in csvreader:
-#     if row[2] == "EQ":
-#         count=count+1
-#         arr.append("{}|{}".format(row[0],row[4]))
 
 redis_client=None
 redis_client= redis.Redis(
-    host= 'dematadesolutions.0yanxb.ng.0001.aps1.cache.amazonaws.com',
-    # host= 'localhost',
+    # host= 'dematadesolutions.0yanxb.ng.0001.aps1.cache.amazonaws.com',
+    host= 'localhost',
     port= '6379')
 print("redis connection : ",redis_client.ping())
 # try:
@@ -131,6 +69,14 @@ else:
             sha256_encryption2 = hashlib.sha256(sha256_encryption1.encode('utf-8')).hexdigest()
 
             def on_message(ws, message):
+                # print("date : ",datetime.now().strftime("%H:%M:%S"))
+                time=datetime.now().strftime("%H:%M:%S")
+                if datetime.now().weekday() == 4 and time=="08:45:00":
+                    alice.get_contract_master("MCX")
+                    alice.get_contract_master("NFO")
+                    alice.get_contract_master("NSE")
+                    alice.get_contract_master("CDS")
+                    # alice.get_contract_master("INDICES")
                 # redis_client.set("AT-{}".format(feed_message["tk"]),json.dumps({"lp":feed_message["lp"],"pc":feed_message["pc"]}))
                 data=json.loads(message)
                 if "lp" in data and "tk" in data:
