@@ -51,8 +51,8 @@ jobs:
           password: ${{ env.PASSWORD }}
           port: ${{ env.PORT }}
           script: |
-            chmod +x ~/dematade_backend/deploy.sh
-            bash ~/dematade_backend/deploy.sh
+            chmod +x ~/Alice_Socket/deploy.sh
+            bash ~/Alice_Socket/deploy.sh
             
       - name: Cleaning up all dangling resources across cluster.
         if: success()
