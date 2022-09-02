@@ -104,7 +104,7 @@ print(count)
 #         arr.append("{}|{}".format(row[0],row[4]))
 
 redis_client = redis.Redis(
-    host= 'localhost',
+    host= 'dematadesolutions.0yanxb.ng.0001.aps1.cache.amazonaws.com',
     port= '6379')
 
 session_request=get_session(client_key,api_key)
