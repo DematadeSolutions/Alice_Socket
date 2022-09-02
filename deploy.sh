@@ -25,7 +25,7 @@ echo ""
 
 docker rm -f $CONTAINER_NAME
 
-docker run -d --restart always --name $CONTAINER_NAME $IMAGE_NAME
+docker run -d -p 8003:8003 --restart always --name $CONTAINER_NAME $IMAGE_NAME
 
 
 echo ""
