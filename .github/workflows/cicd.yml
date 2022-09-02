@@ -6,7 +6,7 @@ on:
 env:
   AWS_SG_ID: sg-0eaad47743913ce17
   AWS_DEFAULT_REGION: ap-south-1
-  HOST: 43.205.169.370 
+  HOST: 43.205.169.37 
   USERNAME: ubuntu
   PASSWORD: C0p33MKy0NTpiv0r6Yee
   PORT: 22
