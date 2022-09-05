@@ -1,4 +1,4 @@
-FROM python:3.10.6-alpine
+FROM python:3.10.6
 WORKDIR /work
 COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
