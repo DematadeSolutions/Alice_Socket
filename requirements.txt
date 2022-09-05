@@ -2,4 +2,3 @@ requests
 websocket-client
 rel
 redis
-pya3
