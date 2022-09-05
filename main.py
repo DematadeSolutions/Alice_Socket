@@ -70,6 +70,7 @@ else:
 
             def on_message(ws, message):
                 # print("date : ",datetime.now().strftime("%H:%M:%S"))
+                
                 time=datetime.now().strftime("%H:%M:%S")
                 if datetime.now().weekday() == 4 and time=="08:45:00":
                     alice.get_contract_master("MCX")
