@@ -47,6 +47,7 @@ redis_client= redis.Redis(
     # host= 'localhost',
     port= '6379')
 print("redis connection : ",redis_client.ping())
+
 try:
     redis_client.ping()
 except (redis.exceptions.ConnectionError, ConnectionRefusedError):
