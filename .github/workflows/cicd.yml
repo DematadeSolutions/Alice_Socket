@@ -1,6 +1,6 @@
 name: Workflow-Release
 on:
-  push:
+  workflow_dispatch:
 
 
 env:

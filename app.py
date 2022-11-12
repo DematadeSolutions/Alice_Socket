@@ -16,7 +16,7 @@ app = flask.Flask(__name__)
 ALLOWED_EXTENSIONS = {'pdf'}
 
 redis_client = redis.Redis(
-    host= 'dematadesolutions.0yanxb.ng.0001.aps1.cache.amazonaws.com',
+    host= '10.193.11.6',
     port= '6379')
 
 alice = Aliceblue(user_id='661371', api_key='TXKMMyVsUg9Re4MqVK3GN1mM18JdtAmsqSxTMXPrarvYLeqKLnbH0bGlo8EfZs30c4usiv6eogi5kmXfr7fWRJknOJFfQjDnpya8khaGi6SXodYm4dPLkYuDMstqAmeI')
