@@ -2,7 +2,7 @@
 
 CONTAINER_NAME="alice-socket"
 IMAGE_NAME="alice-socket"
-SRC=/home/ubuntu/Alice_Socket
+SRC=~/Alice_Socket
 set +x
 echo "=================="
 echo "|Pulling the code|"
